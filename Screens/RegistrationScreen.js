@@ -34,6 +34,7 @@ export function RegistrationScreen() {
     setFormValue((prevState) => ({ ...prevState, password: value }));
 
   const onFormSubmit = () => {
+    setFormValue(initialValue);
     console.log(formValue);
   };
 
