@@ -54,7 +54,10 @@ export function RegistrationScreen() {
             >
               <View style={styles.form}>
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor: isKeyboardOpen ? "#FF6C00" : "#E8E8E8",
+                  }}
                   placeholder="Адреса електронної пошти"
                   onFocus={() => setIsKeyboardOpen(true)}
                   onBlur={() => setIsKeyboardOpen(false)}
@@ -62,7 +65,10 @@ export function RegistrationScreen() {
                   value={formValue.email}
                 ></TextInput>
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor: isKeyboardOpen ? "#FF6C00" : "#E8E8E8",
+                  }}
                   placeholder="Пароль"
                   secureTextEntry={!isPasswordShown}
                   onFocus={() => setIsKeyboardOpen(true)}
