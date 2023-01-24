@@ -45,7 +45,7 @@ export function RegistrationScreen() {
           <View
             style={{
               ...styles.wrap,
-              height: isKeyboardOpen ? 377 : "auto",
+              height: isKeyboardOpen ? 248 : "auto",
             }}
           >
             <Text style={styles.text}>Вхід</Text>
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    paddingTop: 92,
-    paddingBottom: 78,
+    paddingTop: 32,
+    paddingBottom: 144,
   },
   box: {
     backgroundColor: "#F6F6F6",
