@@ -24,9 +24,6 @@ export function RegistrationScreen() {
   const [formValue, setFormValue] = useState(initialValue);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
-  const onChangeLoginInput = (value) =>
-    setInputValue((prevState) => ({ ...prevState, login: value }));
-
   const onChangeEmailInput = (value) =>
     setInputValue((prevState) => ({ ...prevState, email: value }));
 
@@ -50,25 +47,11 @@ export function RegistrationScreen() {
               height: isKeyboardOpen ? 377 : "auto",
             }}
           >
-            <View style={styles.box}>
-              <Image
-                style={styles.icon}
-                source={require("../assets/images/add.png")}
-              />
-            </View>
-            <Text style={styles.text}>Реєстрація</Text>
+            <Text style={styles.text}>Вхід</Text>
             <KeyboardAvoidingView
               behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
               <View style={styles.form}>
-                <TextInput
-                  style={styles.input}
-                  onFocus={() => setIsKeyboardOpen(true)}
-                  onBlur={() => setIsKeyboardOpen(false)}
-                  onChangeText={onChangeLoginInput}
-                  value={formValue.login}
-                  placeholder="Логін"
-                ></TextInput>
                 <TextInput
                   style={styles.input}
                   placeholder="Адреса електронної пошти"
@@ -96,9 +79,9 @@ export function RegistrationScreen() {
                   style={styles.btn}
                   onPress={onFormSubmit}
                 >
-                  <Text style={styles.btnText}>Зареєструватися</Text>
+                  <Text style={styles.btnText}>Увійти</Text>
                 </TouchableOpacity>
-                <RedirectLink>Вже є акаунт? Увійти</RedirectLink>
+                <RedirectLink>Немає акаунта? Зареєструватися</RedirectLink>
               </View>
             </KeyboardAvoidingView>
           </View>
