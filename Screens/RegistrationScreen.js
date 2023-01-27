@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  StyleSheet,
   View,
   Image,
   Text,
@@ -13,6 +12,8 @@ import {
   Keyboard,
 } from "react-native";
 import { useFonts } from "expo-font";
+import { screenStyle, registrationStyle, button } from "../src/styles";
+import { Button } from "../Components/Button";
 
 const initialValue = {
   login: "",
@@ -29,7 +30,7 @@ export function RegistrationScreen() {
   const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
 
   const [fontsLoaded] = useFonts({
-    Roboto: require("../assets/fonts/Roboto-Medium.ttf"),
+    "Roboto-Regular": require("../assets/fonts/Roboto-Medium.ttf"),
   });
   if (!fontsLoaded) {
     return null;
@@ -49,33 +50,36 @@ export function RegistrationScreen() {
     console.log(formValue);
   };
 
+  const { container, form, image, box, input, text, wrap } = screenStyle;
+  const { icon, btnShowPassword, btnShowPasswordText } = registrationStyle;
+
   return (
-    <View style={styles.container}>
+    <View style={container}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <ImageBackground
-          style={styles.image}
+          style={image}
           source={require("../assets/images/PhotoBG.jpg")}
         >
           <View
             style={{
-              ...styles.wrap,
+              ...wrap,
               height: isKeyboardOpen ? 377 : "auto",
             }}
           >
-            <View style={styles.box}>
+            <View style={box}>
               <Image
-                style={styles.icon}
+                style={icon}
                 source={require("../assets/images/add.png")}
               />
             </View>
-            <Text style={styles.text}>Реєстрація</Text>
+            <Text style={text}>Реєстрація</Text>
             <KeyboardAvoidingView
               behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
-              <View style={styles.form}>
+              <View style={form}>
                 <TextInput
                   style={{
-                    ...styles.input,
+                    ...input,
                     borderColor: isLoginInputFocused ? "#FF6C00" : "#E8E8E8",
                   }}
                   onFocus={() => {
@@ -92,7 +96,7 @@ export function RegistrationScreen() {
                 ></TextInput>
                 <TextInput
                   style={{
-                    ...styles.input,
+                    ...input,
                     borderColor: isEmailInputFocused ? "#FF6C00" : "#E8E8E8",
                   }}
                   placeholder="Адреса електронної пошти"
@@ -109,7 +113,7 @@ export function RegistrationScreen() {
                 ></TextInput>
                 <TextInput
                   style={{
-                    ...styles.input,
+                    ...input,
                     borderColor: isPasswordInputFocused ? "#FF6C00" : "#E8E8E8",
                   }}
                   placeholder="Пароль"
@@ -127,21 +131,15 @@ export function RegistrationScreen() {
                 ></TextInput>
 
                 <TouchableOpacity
-                  style={styles.btnShowPassword}
+                  style={btnShowPassword}
                   onPress={() => setIsPasswordShown(!isPasswordShown)}
                 >
-                  <Text style={styles.btnShowPasswordText}>
+                  <Text style={btnShowPasswordText}>
                     {isPasswordShown ? "Приховати" : "Показати"}
                   </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={styles.btn}
-                  onPress={onFormSubmit}
-                >
-                  <Text style={styles.btnText}>Зареєструватися</Text>
-                </TouchableOpacity>
+                <Button>Зареєструватися</Button>
                 {/* <RedirectLink>Вже є акаунт? Увійти</RedirectLink> */}
               </View>
             </KeyboardAvoidingView>
@@ -152,77 +150,77 @@ export function RegistrationScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    fontStyle: Roboto,
-  },
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "flex-end",
-  },
-  wrap: {
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    paddingTop: 92,
-    paddingBottom: 78,
-  },
-  box: {
-    backgroundColor: "#F6F6F6",
-    width: 120,
-    height: 120,
-    position: "absolute",
-    top: -60,
-    left: 128,
-    borderRadius: 16,
-  },
-  icon: {
-    flex: 1,
-    resizeMode: "cover",
-    position: "absolute",
-    top: 81,
-    left: 107,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    textAlign: "center",
-    fontSize: 30,
-    fontWeight: "500",
-  },
-  input: {
-    height: 50,
-    backgroundColor: "#F6F6F6",
-    borderRadius: 8,
-    borderColor: "#E8E8E8",
-    borderWidth: 1,
-    borderStyle: "solid",
-    padding: 16,
-    placeholderTextColor: "#BDBDBD",
-    marginBottom: 16,
-  },
-  form: { marginHorizontal: 16, marginTop: 33 },
-  btn: {
-    height: 51,
-    backgroundColor: "#FF6C00",
-    borderRadius: 100,
-    marginTop: 27,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  btnText: {
-    fontSize: 16,
-    color: "#FFFFFF",
-  },
-  btnShowPassword: {
-    position: "absolute",
-    right: 32,
-    top: 147,
-  },
-  btnShowPasswordText: {
-    color: "#1B4371",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     fontStyle: "Roboto-Regular",
+//   },
+//   image: {
+//     flex: 1,
+//     resizeMode: "cover",
+//     justifyContent: "flex-end",
+//   },
+//   wrap: {
+//     backgroundColor: "#fff",
+//     borderTopLeftRadius: 25,
+//     borderTopRightRadius: 25,
+//     paddingTop: 92,
+//     paddingBottom: 78,
+//   },
+//   box: {
+//     backgroundColor: "#F6F6F6",
+//     width: 120,
+//     height: 120,
+//     position: "absolute",
+//     top: -60,
+//     left: 128,
+//     borderRadius: 16,
+//   },
+//   icon: {
+//     flex: 1,
+//     resizeMode: "cover",
+//     position: "absolute",
+//     top: 81,
+//     left: 107,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   text: {
+//     textAlign: "center",
+//     fontSize: 30,
+//     fontWeight: "500",
+//   },
+//   input: {
+//     height: 50,
+//     backgroundColor: "#F6F6F6",
+//     borderRadius: 8,
+//     borderColor: "#E8E8E8",
+//     borderWidth: 1,
+//     borderStyle: "solid",
+//     padding: 16,
+//     placeholderTextColor: "#BDBDBD",
+//     marginBottom: 16,
+//   },
+//   form: { marginHorizontal: 16, marginTop: 33 },
+//   btn: {
+//     height: 51,
+//     backgroundColor: "#FF6C00",
+//     borderRadius: 100,
+//     marginTop: 27,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   btnText: {
+//     fontSize: 16,
+//     color: "#FFFFFF",
+//   },
+//   btnShowPassword: {
+//     position: "absolute",
+//     right: 32,
+//     top: 147,
+//   },
+//   btnShowPasswordText: {
+//     color: "#1B4371",
+//   },
+// });

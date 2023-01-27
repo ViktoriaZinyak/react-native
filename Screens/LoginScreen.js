@@ -100,30 +100,12 @@ export function RegistrationScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "flex-end",
-  },
   wrap: {
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 32,
     paddingBottom: 144,
-  },
-  box: {
-    backgroundColor: "#F6F6F6",
-    width: 120,
-    height: 120,
-    position: "absolute",
-    top: -60,
-    left: 128,
-    borderRadius: 16,
   },
   icon: {
     flex: 1,
@@ -139,28 +121,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "500",
   },
-  input: {
-    height: 50,
-    backgroundColor: "#F6F6F6",
-    borderRadius: 8,
-    borderColor: "#E8E8E8",
-    borderWidth: 1,
-    borderStyle: "solid",
-    padding: 16,
-    placeholderTextColor: "#BDBDBD",
-    marginBottom: 16,
-  },
+
   form: { marginHorizontal: 16, marginTop: 33 },
-  btn: {
-    height: 51,
-    backgroundColor: "#FF6C00",
-    borderRadius: 100,
-    marginTop: 27,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  btnText: {
-    fontSize: 16,
-    color: "#FFFFFF",
-  },
 });
