@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { useFonts } from "expo-font";
 
 const initialValue = {
   login: "",
@@ -23,12 +24,22 @@ export function RegistrationScreen() {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [formValue, setFormValue] = useState(initialValue);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isLoginInputFocused, setIsLoginInputFocused] = useState(false);
+  const [isEmailInputFocused, setIsEmailInputFocused] = useState(false);
+  const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
+
+  const [fontsLoaded] = useFonts({
+    Roboto: require("../assets/fonts/Roboto-Medium.ttf"),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
 
   const onChangeLoginInput = (value) =>
-    setInputValue((prevState) => ({ ...prevState, login: value }));
+    setFormValue((prevState) => ({ ...prevState, login: value }));
 
   const onChangeEmailInput = (value) =>
-    setInputValue((prevState) => ({ ...prevState, email: value }));
+    setFormValue((prevState) => ({ ...prevState, email: value }));
 
   const onChangePasswordInput = (value) =>
     setFormValue((prevState) => ({ ...prevState, password: value }));
@@ -65,10 +76,16 @@ export function RegistrationScreen() {
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderColor: isKeyboardOpen ? "#FF6C00" : "#E8E8E8",
+                    borderColor: isLoginInputFocused ? "#FF6C00" : "#E8E8E8",
                   }}
-                  onFocus={() => setIsKeyboardOpen(true)}
-                  onBlur={() => setIsKeyboardOpen(false)}
+                  onFocus={() => {
+                    setIsKeyboardOpen(true);
+                    setIsLoginInputFocused(true);
+                  }}
+                  onBlur={() => {
+                    setIsKeyboardOpen(false);
+                    setIsLoginInputFocused(false);
+                  }}
                   onChangeText={onChangeLoginInput}
                   value={formValue.login}
                   placeholder="Логін"
@@ -76,29 +93,46 @@ export function RegistrationScreen() {
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderColor: isKeyboardOpen ? "#FF6C00" : "#E8E8E8",
+                    borderColor: isEmailInputFocused ? "#FF6C00" : "#E8E8E8",
                   }}
                   placeholder="Адреса електронної пошти"
-                  onFocus={() => setIsKeyboardOpen(true)}
-                  onBlur={() => setIsKeyboardOpen(false)}
+                  onFocus={() => {
+                    setIsKeyboardOpen(true);
+                    setIsEmailInputFocused(true);
+                  }}
+                  onBlur={() => {
+                    setIsKeyboardOpen(false);
+                    setIsEmailInputFocused(false);
+                  }}
                   onChangeText={onChangeEmailInput}
                   value={formValue.email}
                 ></TextInput>
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderColor: isKeyboardOpen ? "#FF6C00" : "#E8E8E8",
+                    borderColor: isPasswordInputFocused ? "#FF6C00" : "#E8E8E8",
                   }}
                   placeholder="Пароль"
                   secureTextEntry={!isPasswordShown}
-                  onFocus={() => setIsKeyboardOpen(true)}
-                  onBlur={() => setIsKeyboardOpen(false)}
+                  onFocus={() => {
+                    setIsKeyboardOpen(true);
+                    setIsPasswordInputFocused(true);
+                  }}
+                  onBlur={() => {
+                    setIsKeyboardOpen(false);
+                    setIsPasswordInputFocused(false);
+                  }}
                   onChangeText={onChangePasswordInput}
                   value={formValue.password}
                 ></TextInput>
 
-                <TouchableOpacity onPress={() => setIsPasswordShown(true)}>
-                  <Text>{isPasswordShown ? "Приховати" : "Показати"}</Text>
+                <TouchableOpacity
+                  style={styles.btnShowPassword}
+                  onPress={() => setIsPasswordShown(!isPasswordShown)}
+                >
+                  <Text style={styles.btnShowPasswordText}>
+                    {isPasswordShown ? "Приховати" : "Показати"}
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -108,7 +142,7 @@ export function RegistrationScreen() {
                 >
                   <Text style={styles.btnText}>Зареєструватися</Text>
                 </TouchableOpacity>
-                <RedirectLink>Вже є акаунт? Увійти</RedirectLink>
+                {/* <RedirectLink>Вже є акаунт? Увійти</RedirectLink> */}
               </View>
             </KeyboardAvoidingView>
           </View>
@@ -122,6 +156,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    fontStyle: Roboto,
   },
   image: {
     flex: 1,
@@ -181,5 +216,13 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 16,
     color: "#FFFFFF",
+  },
+  btnShowPassword: {
+    position: "absolute",
+    right: 32,
+    top: 147,
+  },
+  btnShowPasswordText: {
+    color: "#1B4371",
   },
 });

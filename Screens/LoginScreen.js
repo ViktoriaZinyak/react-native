@@ -11,6 +11,7 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Keyboard,
+  RedirectLink,
 } from "react-native";
 
 const initialValue = {
