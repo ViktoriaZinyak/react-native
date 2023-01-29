@@ -12,8 +12,8 @@ import {
   Keyboard,
 } from "react-native";
 import { useFonts } from "expo-font";
-import { screenStyle, registrationStyle, button } from "../src/styles";
-import { Button } from "../Components/Button";
+import { screenStyle, registrationStyle } from "../src/styles";
+import { Button } from "../Components/Button/Button";
 
 const initialValue = {
   login: "",
@@ -139,7 +139,7 @@ export function RegistrationScreen() {
                   </Text>
                 </TouchableOpacity>
 
-                <Button>Зареєструватися</Button>
+                <Button onPress={onFormSubmit}>Зареєструватися</Button>
                 {/* <RedirectLink>Вже є акаунт? Увійти</RedirectLink> */}
               </View>
             </KeyboardAvoidingView>
