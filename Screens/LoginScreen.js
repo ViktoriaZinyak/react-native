@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   StyleSheet,
   View,
-  Image,
   Text,
   TextInput,
   TouchableOpacity,

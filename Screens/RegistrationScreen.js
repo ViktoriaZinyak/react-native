@@ -11,7 +11,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { useFonts } from "expo-font";
+// import { useFonts } from "expo-font";
 import { screenStyle, registrationStyle } from "../src/styles";
 import { Button } from "../Components/Button/Button";
 
@@ -29,12 +29,12 @@ export function RegistrationScreen() {
   const [isEmailInputFocused, setIsEmailInputFocused] = useState(false);
   const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
 
-  const [fontsLoaded] = useFonts({
-    "Roboto-Regular": require("../assets/fonts/Roboto-Medium.ttf"),
-  });
-  if (!fontsLoaded) {
-    return null;
-  }
+  // const [fontsLoaded] = useFonts({
+  //   "Roboto-Regular": require("../assets/fonts/Roboto-Medium.ttf"),
+  // });
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
 
   const onChangeLoginInput = (value) =>
     setFormValue((prevState) => ({ ...prevState, login: value }));
