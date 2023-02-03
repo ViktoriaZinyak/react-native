@@ -11,9 +11,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-// import { useFonts } from "expo-font";
 import { screenStyle, registrationStyle } from "../src/styles";
 import { Button } from "../Components/Button/Button";
+import { RedirectLink } from "../Components/RedirectLink/RedirectLink";
 
 const initialValue = {
   login: "",
@@ -21,20 +21,13 @@ const initialValue = {
   password: "",
 };
 
-export function RegistrationScreen() {
+export function RegistrationScreen({ navigation }) {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [formValue, setFormValue] = useState(initialValue);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isLoginInputFocused, setIsLoginInputFocused] = useState(false);
   const [isEmailInputFocused, setIsEmailInputFocused] = useState(false);
   const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
-
-  // const [fontsLoaded] = useFonts({
-  //   "Roboto-Regular": require("../assets/fonts/Roboto-Medium.ttf"),
-  // });
-  // if (!fontsLoaded) {
-  //   return null;
-  // }
 
   const onChangeLoginInput = (value) =>
     setFormValue((prevState) => ({ ...prevState, login: value }));
@@ -140,7 +133,9 @@ export function RegistrationScreen() {
                 </TouchableOpacity>
 
                 <Button onPress={onFormSubmit}>Зареєструватися</Button>
-                {/* <RedirectLink>Вже є акаунт? Увійти</RedirectLink> */}
+                <RedirectLink onPress={() => navigation.navigate("Login")}>
+                  Вже є акаунт? Увійти
+                </RedirectLink>
               </View>
             </KeyboardAvoidingView>
           </View>
@@ -149,78 +144,3 @@ export function RegistrationScreen() {
     </View>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     fontStyle: "Roboto-Regular",
-//   },
-//   image: {
-//     flex: 1,
-//     resizeMode: "cover",
-//     justifyContent: "flex-end",
-//   },
-//   wrap: {
-//     backgroundColor: "#fff",
-//     borderTopLeftRadius: 25,
-//     borderTopRightRadius: 25,
-//     paddingTop: 92,
-//     paddingBottom: 78,
-//   },
-//   box: {
-//     backgroundColor: "#F6F6F6",
-//     width: 120,
-//     height: 120,
-//     position: "absolute",
-//     top: -60,
-//     left: 128,
-//     borderRadius: 16,
-//   },
-//   icon: {
-//     flex: 1,
-//     resizeMode: "cover",
-//     position: "absolute",
-//     top: 81,
-//     left: 107,
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   text: {
-//     textAlign: "center",
-//     fontSize: 30,
-//     fontWeight: "500",
-//   },
-//   input: {
-//     height: 50,
-//     backgroundColor: "#F6F6F6",
-//     borderRadius: 8,
-//     borderColor: "#E8E8E8",
-//     borderWidth: 1,
-//     borderStyle: "solid",
-//     padding: 16,
-//     placeholderTextColor: "#BDBDBD",
-//     marginBottom: 16,
-//   },
-//   form: { marginHorizontal: 16, marginTop: 33 },
-//   btn: {
-//     height: 51,
-//     backgroundColor: "#FF6C00",
-//     borderRadius: 100,
-//     marginTop: 27,
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   btnText: {
-//     fontSize: 16,
-//     color: "#FFFFFF",
-//   },
-//   btnShowPassword: {
-//     position: "absolute",
-//     right: 32,
-//     top: 147,
-//   },
-//   btnShowPasswordText: {
-//     color: "#1B4371",
-//   },
-// });

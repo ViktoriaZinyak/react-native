@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  StyleSheet,
   View,
   Text,
   TextInput,
@@ -10,22 +9,30 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Keyboard,
-  RedirectLink,
 } from "react-native";
+
+import { screenStyle, registrationStyle } from "../src/styles";
+import { Button } from "../Components/Button/Button";
+import { RedirectLink } from "../Components/RedirectLink/RedirectLink";
 
 const initialValue = {
   login: "",
-  email: "",
   password: "",
 };
 
-export function RegistrationScreen() {
+export function LoginScreen({ navigation }) {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [formValue, setFormValue] = useState(initialValue);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isLoginInputFocused, setIsLoginInputFocused] = useState(false);
+  const [isEmailInputFocused, setIsEmailInputFocused] = useState(false);
+  const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
+
+  const onChangeLoginInput = (value) =>
+    setFormValue((prevState) => ({ ...prevState, login: value }));
 
   const onChangeEmailInput = (value) =>
-    setInputValue((prevState) => ({ ...prevState, email: value }));
+    setFormValue((prevState) => ({ ...prevState, email: value }));
 
   const onChangePasswordInput = (value) =>
     setFormValue((prevState) => ({ ...prevState, password: value }));
@@ -35,60 +42,80 @@ export function RegistrationScreen() {
     console.log(formValue);
   };
 
+  const { container, form, image, input, text, wrap } = screenStyle;
+  const { btnShowPassword, btnShowPasswordText } = registrationStyle;
+
   return (
-    <View style={styles.container}>
+    <View style={container}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <ImageBackground
-          style={styles.image}
+          style={image}
           source={require("../assets/images/PhotoBG.jpg")}
         >
           <View
             style={{
-              ...styles.wrap,
-              height: isKeyboardOpen ? 248 : "auto",
+              ...wrap,
+              height: isKeyboardOpen ? 250 : "auto",
+              paddingTop: 32,
+              paddingBottom: 132,
             }}
           >
-            <Text style={styles.text}>Вхід</Text>
+            <Text style={text}>Вхід</Text>
             <KeyboardAvoidingView
               behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
-              <View style={styles.form}>
+              <View style={form}>
                 <TextInput
                   style={{
-                    ...styles.input,
-                    borderColor: isKeyboardOpen ? "#FF6C00" : "#E8E8E8",
+                    ...input,
+                    borderColor: isEmailInputFocused ? "#FF6C00" : "#E8E8E8",
                   }}
                   placeholder="Адреса електронної пошти"
-                  onFocus={() => setIsKeyboardOpen(true)}
-                  onBlur={() => setIsKeyboardOpen(false)}
+                  onFocus={() => {
+                    setIsKeyboardOpen(true);
+                    setIsEmailInputFocused(true);
+                  }}
+                  onBlur={() => {
+                    setIsKeyboardOpen(false);
+                    setIsEmailInputFocused(false);
+                  }}
                   onChangeText={onChangeEmailInput}
                   value={formValue.email}
                 ></TextInput>
                 <TextInput
                   style={{
-                    ...styles.input,
-                    borderColor: isKeyboardOpen ? "#FF6C00" : "#E8E8E8",
+                    ...input,
+                    borderColor: isPasswordInputFocused ? "#FF6C00" : "#E8E8E8",
                   }}
                   placeholder="Пароль"
                   secureTextEntry={!isPasswordShown}
-                  onFocus={() => setIsKeyboardOpen(true)}
-                  onBlur={() => setIsKeyboardOpen(false)}
+                  onFocus={() => {
+                    setIsKeyboardOpen(true);
+                    setIsPasswordInputFocused(true);
+                  }}
+                  onBlur={() => {
+                    setIsKeyboardOpen(false);
+                    setIsPasswordInputFocused(false);
+                  }}
                   onChangeText={onChangePasswordInput}
                   value={formValue.password}
                 ></TextInput>
 
-                <TouchableOpacity onPress={() => setIsPasswordShown(true)}>
-                  <Text>{isPasswordShown ? "Приховати" : "Показати"}</Text>
+                <TouchableOpacity
+                  style={btnShowPassword}
+                  onPress={() => setIsPasswordShown(!isPasswordShown)}
+                >
+                  <Text style={{ ...btnShowPasswordText, top: -66 }}>
+                    {isPasswordShown ? "Приховати" : "Показати"}
+                  </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={styles.btn}
-                  onPress={onFormSubmit}
+                <Button onPress={onFormSubmit}>Увійти</Button>
+                <RedirectLink
+                  onPress={() => navigation.navigate("Registration")}
                 >
-                  <Text style={styles.btnText}>Увійти</Text>
-                </TouchableOpacity>
-                <RedirectLink>Немає акаунта? Зареєструватися</RedirectLink>
+                  Немає акаунту? Зареєструватися
+                </RedirectLink>
               </View>
             </KeyboardAvoidingView>
           </View>
@@ -97,29 +124,3 @@ export function RegistrationScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  wrap: {
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    paddingTop: 32,
-    paddingBottom: 144,
-  },
-  icon: {
-    flex: 1,
-    resizeMode: "cover",
-    position: "absolute",
-    top: 81,
-    left: 107,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    textAlign: "center",
-    fontSize: 30,
-    fontWeight: "500",
-  },
-
-  form: { marginHorizontal: 16, marginTop: 33 },
-});
