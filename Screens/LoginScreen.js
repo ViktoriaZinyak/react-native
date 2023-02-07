@@ -38,6 +38,7 @@ export function LoginScreen({ navigation }) {
     setFormValue((prevState) => ({ ...prevState, password: value }));
 
   const onFormSubmit = () => {
+    // navigation.navigate("PostsScreen");
     setFormValue(initialValue);
     console.log(formValue);
   };

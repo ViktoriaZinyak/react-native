@@ -9,6 +9,7 @@ import {
   RegistrationScreen,
   LoginScreen,
 } from "./Screens";
+import { getHeaderTitle } from "./helpers/getHeaderTitle";
 
 const MainStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,27 +34,28 @@ export const useRoute = (isAuth) => {
 
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         tabBarStyle: {
           height: 83,
-          //   paddingLeft: 90,
-          //   paddingRight: 90,
           paddingTop: 9,
           paddingBottom: 34,
           justifyContent: "center",
           alignItems: "center",
           boxShadow: "0px -0.5px 0px rgba(0, 0, 0, 0.3)",
-          //flex: 1,
         },
-      }}
+        headerStyle: {
+          height: 88,
+        },
+        headerTitle: `${getHeaderTitle(route.name)}`,
+        headerTitleAlign: "center",
+      })}
     >
       <Tab.Screen
-        options={({ navigation }) => ({
+        options={({ navigation, route }) => ({
           tabBarButton: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate("PostsScreen")}
-              //style={{ paddingTop: 13.5 }}
               style={{ alignItems: "center", justifyContent: "center" }}
             >
               <Image
@@ -62,28 +64,18 @@ export const useRoute = (isAuth) => {
               />
             </TouchableOpacity>
           ),
-          headerRight: (props) => (
+          // headerTitleAlign: "center",
+          headerRight: () => (
             <TouchableOpacity
-              style={{
-                marginLeft: 43,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
-                backgroundColor: "#FF6C00",
-                height: 40,
-                width: 70,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
               onPress={() => navigation.navigate("CreatePostsScreen")}
             >
               <Image
-                style={{ width: 13, height: 13 }}
-                source={require("./assets/images/Union.png")}
+                style={{ width: 24, height: 24 }}
+                source={require("./assets/images/log-out.png")}
               />
             </TouchableOpacity>
           ),
+          headerRightContainerStyle: { paddingRight: 16 },
         })}
         name="PostsScreen"
         component={PostsScreen}
@@ -112,6 +104,18 @@ export const useRoute = (isAuth) => {
               />
             </TouchableOpacity>
           ),
+          // headerTitleAlign: "center",
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("PostsScreen")}
+            >
+              <Image
+                style={{ width: 24, height: 24 }}
+                source={require("./assets/images/arrow-left.png")}
+              />
+            </TouchableOpacity>
+          ),
+          headerLeftContainerStyle: { paddingLeft: 20 },
         })}
         name="CreatePostsScreen"
         component={CreatePostsScreen}
@@ -133,6 +137,7 @@ export const useRoute = (isAuth) => {
               />
             </TouchableOpacity>
           ),
+          headerShown: false,
         })}
         name="ProfileScreen"
         component={ProfileScreen}
