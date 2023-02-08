@@ -1,4 +1,5 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRoute } from "./router";

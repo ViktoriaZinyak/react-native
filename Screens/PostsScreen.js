@@ -1,7 +1,15 @@
-import { Text, View } from "react-native";
+import { Text, View, FlatList, Image } from "react-native";
+import { useEffect, useState } from "react";
 import { User } from "../Components/User/User";
 
-export const PostsScreen = () => {
+export const PostsScreen = ({ route }) => {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    if (route.params) {
+      setPosts((prevState) => [...prevState, route.params]);
+    }
+  }, [route.params]);
+  console.log(posts);
   return (
     <>
       <View
@@ -12,7 +20,19 @@ export const PostsScreen = () => {
           paddingLeft: 16,
         }}
       >
-        <User></User>
+        <User />
+        <FlatList
+          data={posts}
+          keyExtractor={(item, idx) => idx.toString()}
+          renderItem={({ item }) => (
+            <View>
+              <Image
+                source={{ uri: item.photo }}
+                style={{ height: 200, width: 100 }}
+              ></Image>
+            </View>
+          )}
+        ></FlatList>
       </View>
     </>
   );
