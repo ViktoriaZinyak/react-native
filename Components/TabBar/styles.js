@@ -8,10 +8,10 @@ export const tabBar = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: 83,
-    paddingTop: 13,
+    paddingTop: 9,
     borderTopColor: "rgba(0, 0, 0, 0.3)",
     borderStyle: "solid",
-    borderTopWidth: 1,
+    borderTopWidth: 0.5,
   },
   focusedBtn: {
     marginLeft: 43,

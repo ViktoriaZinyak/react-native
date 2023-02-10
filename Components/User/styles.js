@@ -5,6 +5,7 @@ export const userStyled = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     backgroundColor: "#FFF",
+    marginBottom: 32,
   },
   img: { width: 60, height: 60 },
   userWrap: {

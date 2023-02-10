@@ -9,17 +9,25 @@ import {
 } from "react-native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import * as Location from "expo-location";
 
 export const CreatePostsScreen = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       await MediaLibrary.requestPermissionsAsync();
+      const permission = await Location.requestForegroundPermissionsAsync();
+      if (permission.status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
 
       setHasPermission(status === "granted");
     })();
@@ -43,11 +51,20 @@ export const CreatePostsScreen = ({ navigation }) => {
         : Camera.Constants.Type.back
     );
     const photo = await camera.takePictureAsync();
+    const location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    console.log(location);
     setPhoto(photo.uri);
   };
 
+  if (errorMsg) {
+    return <Text> {errorMsg} </Text>;
+  } else if (location) {
+    JSON.stringify(location);
+  }
+
   const sendPhoto = () => {
-    navigation.navigate("PostsScreen", { photo });
+    navigation.navigate("PostsScreen", { photo, location });
   };
 
   return (
