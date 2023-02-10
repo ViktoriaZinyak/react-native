@@ -28,7 +28,7 @@ export const PostsScreen = ({ route }) => {
             <View>
               <Image
                 source={{ uri: item.photo }}
-                style={{ height: 200, width: 100 }}
+                style={{ height: 200, width: 150 }}
               ></Image>
             </View>
           )}

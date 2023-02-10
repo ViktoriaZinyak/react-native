@@ -32,10 +32,6 @@ export const CreatePostsScreen = ({ navigation }) => {
     return <Text>No access to camera</Text>;
   }
 
-  const deletePhoto = () => {
-    setPhoto(null);
-  };
-
   const takePhoto = async () => {
     setType(
       type === Camera.Constants.Type.back
@@ -53,19 +49,19 @@ export const CreatePostsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Camera style={styles.camera} ref={setCamera}>
-        {photo && (
-          <View style={styles.photoContainer} pointerEvents="none">
-            <Image
-              source={{ uri: photo }}
-              style={{
-                width: 360,
-                height: 240,
-                borderRadius: 8,
-              }}
-              pointerEvents="none"
-            ></Image>
-          </View>
-        )}
+        {/* {photo && ( */}
+        <View style={styles.photoContainer} pointerEvents="none">
+          <Image
+            source={{ uri: photo }}
+            style={{
+              width: 380,
+              height: 240,
+              borderRadius: 8,
+            }}
+            pointerEvents="none"
+          ></Image>
+        </View>
+        {/* )} */}
         <TouchableOpacity onPress={takePhoto} style={styles.button}>
           <Image
             style={{ width: 24, height: 24 }}
@@ -82,16 +78,9 @@ export const CreatePostsScreen = ({ navigation }) => {
       </View>
       <View style={styles.inputContainer}>
         <TextInput style={styles.input} placeholder="Назва..."></TextInput>
-        <TextInput style={styles.input} placeholder="Місцевість"></TextInput>
       </View>
       <TouchableOpacity onPress={sendPhoto} style={styles.buttonSendPhoto}>
         <Text style={styles.buttonSendPhotoText}>Опублікувати</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={deletePhoto} style={styles.buttonDelete}>
-        <Image
-          style={{ width: 24, height: 24 }}
-          source={require("../assets/images/delete.png")}
-        />
       </TouchableOpacity>
     </View>
   );
@@ -124,7 +113,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 100,
-    marginTop: 15,
+    marginTop: 48,
   },
   buttonSendPhotoText: {
     marginVertical: 16,
@@ -137,28 +126,15 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   },
-  textContainer: { marginHorizontal: 16, marginTop: 8, marginBottom: 28 },
+  textContainer: { marginHorizontal: 16, marginTop: 8, marginBottom: 48 },
   text: { fontSize: 16, color: "#BDBDBD" },
   inputContainer: { marginHorizontal: 16 },
   input: {
     height: 45,
-    borderColor: "#FFF",
-    borderBottomColor: "#E8E8E8",
+    borderColor: "#E8E8E8",
     borderWidth: 1,
     borderStyle: "solid",
     fontSize: 16,
     placeholderTextColor: "#BDBDBD",
-    marginBottom: 15,
-  },
-  buttonDelete: {
-    // marginLeft: 43,
-    borderRadius: 20,
-    backgroundColor: "#F6F6F6",
-    height: 40,
-    width: 70,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 90,
-    alignSelf: "center",
   },
 });
