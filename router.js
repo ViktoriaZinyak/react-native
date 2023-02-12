@@ -179,11 +179,10 @@ export const useRoute = (isAuth) => {
       </MainStack.Navigator>
     );
   }
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerTitle: `${getHeaderTitle(route.name)}`,
+        headerTitle: getHeaderTitle(route.name),
         headerTitleAlign: "center",
       })}
       tabBar={({ state }) => {
@@ -194,18 +193,8 @@ export const useRoute = (isAuth) => {
       }}
     >
       <Tab.Screen
-        options={({ navigation }) => ({
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("CreatePostsScreen")}
-            >
-              <Image
-                style={{ width: 24, height: 24 }}
-                source={require("./assets/images/log-out.png")}
-              />
-            </TouchableOpacity>
-          ),
-          headerRightContainerStyle: { paddingRight: 16 },
+        options={({}) => ({
+          headerShown: false,
         })}
         name="PostsScreen"
         component={PostsScreen}

@@ -6,18 +6,33 @@ import {
   Image,
   Text,
   TextInput,
+  Keyboard,
 } from "react-native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 
+const photoState = {
+  namePhoto: "",
+  location: "",
+};
+
 export const CreatePostsScreen = ({ navigation }) => {
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [dataPhoto, setDataPhoto] = useState(photoState);
+  // const [formValue, setFormValue] = useState(photoState);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const keyboardHide = () => {
+    setIsKeyboardOpen(false);
+    Keyboard.dismiss();
+  };
 
   useEffect(() => {
     (async () => {
@@ -51,10 +66,11 @@ export const CreatePostsScreen = ({ navigation }) => {
         : Camera.Constants.Type.back
     );
     const photo = await camera.takePictureAsync();
-    const location = await Location.getCurrentPositionAsync({});
+    const location = await Location.getCurrentPositionAsync();
     setLocation(location);
-    console.log(location);
     setPhoto(photo.uri);
+    console.log(location);
+    // keyboardHide();
   };
 
   if (errorMsg) {
@@ -64,12 +80,21 @@ export const CreatePostsScreen = ({ navigation }) => {
   }
 
   const sendPhoto = () => {
-    navigation.navigate("PostsScreen", { photo, location });
+    navigation.navigate("DefaultScreen", { photo, location });
   };
+
+  const onChangeNameInput = (value) =>
+    setDataPhoto((prevState) => ({ ...prevState, namePhoto: value }));
+
+  const onChangeLocationInput = (value) =>
+    setDataPhoto((prevState) => ({ ...prevState, location: value }));
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} ref={setCamera}>
+      <Camera
+        style={{ ...styles.camera, height: isKeyboardOpen ? 0 : 240 }}
+        ref={setCamera}
+      >
         {photo && (
           <View style={styles.photoContainer} pointerEvents="none">
             <Image
@@ -98,11 +123,50 @@ export const CreatePostsScreen = ({ navigation }) => {
         )}
       </View>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder="Назва..."></TextInput>
-        <TextInput style={styles.input} placeholder="Місцевість"></TextInput>
+        <TextInput
+          style={styles.input}
+          placeholder="Назва..."
+          onChangeText={onChangeNameInput}
+          onFocus={() => setIsKeyboardOpen(true)}
+          onSubmitEditing={keyboardHide}
+          value={dataPhoto.namePhoto}
+          onBlur={() => {
+            setIsKeyboardOpen(false);
+          }}
+        ></TextInput>
+        <TextInput
+          style={styles.input}
+          placeholder="Місцевість"
+          onChangeText={onChangeLocationInput}
+          onFocus={() => setIsKeyboardOpen(true)}
+          onSubmitEditing={keyboardHide}
+          value={dataPhoto.location}
+          onBlur={() => {
+            setIsKeyboardOpen(false);
+          }}
+        ></TextInput>
       </View>
-      <TouchableOpacity onPress={sendPhoto} style={styles.buttonSendPhoto}>
-        <Text style={styles.buttonSendPhotoText}>Опублікувати</Text>
+      <TouchableOpacity
+        onPress={sendPhoto}
+        style={{
+          ...styles.buttonSendPhoto,
+          backgroundColor:
+            dataPhoto.namePhoto != "" && dataPhoto.location != ""
+              ? "#FF6C00"
+              : "#F6F6F6",
+        }}
+      >
+        <Text
+          style={{
+            ...styles.buttonSendPhotoText,
+            color:
+              dataPhoto.namePhoto != "" && dataPhoto.location != ""
+                ? "#FFF"
+                : "#BDBDBD",
+          }}
+        >
+          Опублікувати
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={deletePhoto} style={styles.buttonDelete}>
         <Image
