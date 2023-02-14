@@ -1,10 +1,14 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRoute } from "./router";
+import { store } from "./redux/store";
+import { auth } from "./firebase/config";
+import { useState } from "react";
 
 export default function App() {
+  const [user, setUser] = useState(null);
   const [fontsLoaded] = useFonts({
     "Roboto-Regular": require("./assets/fonts/Roboto-Medium.ttf"),
   });
@@ -12,7 +16,15 @@ export default function App() {
     return null;
   }
 
-  const routing = useRoute(true);
+  auth.onAuthStateChanged((user) => {
+    setUser(user);
+  });
 
-  return <NavigationContainer>{routing}</NavigationContainer>;
+  const routing = useRoute(user);
+
+  return (
+    <Provider store={store}>
+      <NavigationContainer>{routing}</NavigationContainer>
+    </Provider>
+  );
 }

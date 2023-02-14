@@ -14,11 +14,13 @@ import {
 import { screenStyle, registrationStyle } from "../src/styles";
 import { Button } from "../Components/Button/Button";
 import { RedirectLink } from "../Components/RedirectLink/RedirectLink";
+import { useDispatch } from "react-redux";
+import { authSignUp } from "../redux/auth/authOperations";
 
 const initialValue = {
-  login: "",
   email: "",
   password: "",
+  login: "",
 };
 
 export function RegistrationScreen({ navigation }) {
@@ -28,6 +30,8 @@ export function RegistrationScreen({ navigation }) {
   const [isLoginInputFocused, setIsLoginInputFocused] = useState(false);
   const [isEmailInputFocused, setIsEmailInputFocused] = useState(false);
   const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
+
+  const dispatch = useDispatch();
 
   const onChangeLoginInput = (value) =>
     setFormValue((prevState) => ({ ...prevState, login: value }));
@@ -40,6 +44,7 @@ export function RegistrationScreen({ navigation }) {
 
   const onFormSubmit = () => {
     setFormValue(initialValue);
+    dispatch(authSignUp(formValue));
     console.log(formValue);
   };
 

@@ -10,6 +10,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { authSignIn } from "../redux/auth/authOperations";
 
 import { screenStyle, registrationStyle } from "../src/styles";
 import { Button } from "../Components/Button/Button";
@@ -24,13 +26,10 @@ export function LoginScreen({ navigation }) {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [formValue, setFormValue] = useState(initialValue);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [isLoginInputFocused, setIsLoginInputFocused] = useState(false);
   const [isEmailInputFocused, setIsEmailInputFocused] = useState(false);
   const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
 
-  const onChangeLoginInput = (value) =>
-    setFormValue((prevState) => ({ ...prevState, login: value }));
-
+  const dispatch = useDispatch();
   const onChangeEmailInput = (value) =>
     setFormValue((prevState) => ({ ...prevState, email: value }));
 
@@ -39,6 +38,7 @@ export function LoginScreen({ navigation }) {
 
   const onFormSubmit = () => {
     setFormValue(initialValue);
+    dispatch(authSignIn(formValue));
     console.log(formValue);
   };
 

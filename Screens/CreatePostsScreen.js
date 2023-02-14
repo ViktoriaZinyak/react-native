@@ -14,7 +14,7 @@ import * as Location from "expo-location";
 
 const photoState = {
   namePhoto: "",
-  location: "",
+  locationName: "",
 };
 
 export const CreatePostsScreen = ({ navigation }) => {
@@ -66,11 +66,12 @@ export const CreatePostsScreen = ({ navigation }) => {
         : Camera.Constants.Type.back
     );
     const photo = await camera.takePictureAsync();
-    const location = await Location.getCurrentPositionAsync();
+    const location = await Location.getCurrentPositionAsync({});
     setLocation(location);
     setPhoto(photo.uri);
+
     console.log(location);
-    // keyboardHide();
+    keyboardHide();
   };
 
   if (errorMsg) {
@@ -80,15 +81,16 @@ export const CreatePostsScreen = ({ navigation }) => {
   }
 
   const sendPhoto = () => {
-    navigation.navigate("DefaultScreen", { photo, location });
+    navigation.navigate("DefaultScreen", { photo, location, dataPhoto });
   };
 
   const onChangeNameInput = (value) =>
     setDataPhoto((prevState) => ({ ...prevState, namePhoto: value }));
 
   const onChangeLocationInput = (value) =>
-    setDataPhoto((prevState) => ({ ...prevState, location: value }));
+    setDataPhoto((prevState) => ({ ...prevState, locationName: value }));
 
+  console.log(dataPhoto);
   return (
     <View style={styles.container}>
       <Camera
@@ -140,7 +142,7 @@ export const CreatePostsScreen = ({ navigation }) => {
           onChangeText={onChangeLocationInput}
           onFocus={() => setIsKeyboardOpen(true)}
           onSubmitEditing={keyboardHide}
-          value={dataPhoto.location}
+          value={dataPhoto.locationName}
           onBlur={() => {
             setIsKeyboardOpen(false);
           }}
@@ -151,7 +153,7 @@ export const CreatePostsScreen = ({ navigation }) => {
         style={{
           ...styles.buttonSendPhoto,
           backgroundColor:
-            dataPhoto.namePhoto != "" && dataPhoto.location != ""
+            dataPhoto.namePhoto != "" && dataPhoto.locationName != ""
               ? "#FF6C00"
               : "#F6F6F6",
         }}
@@ -160,7 +162,7 @@ export const CreatePostsScreen = ({ navigation }) => {
           style={{
             ...styles.buttonSendPhotoText,
             color:
-              dataPhoto.namePhoto != "" && dataPhoto.location != ""
+              dataPhoto.namePhoto != "" && dataPhoto.locationName != ""
                 ? "#FFF"
                 : "#BDBDBD",
           }}

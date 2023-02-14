@@ -41,7 +41,7 @@ export const DefaultPostsScreen = ({ route, navigation }) => {
                     fontWeight: "500",
                   }}
                 >
-                  Лес
+                  {item.dataPhoto.namePhoto}
                 </Text>
               </View>
               <View
@@ -79,7 +79,7 @@ export const DefaultPostsScreen = ({ route, navigation }) => {
                       textDecorationLine: "underline",
                     }}
                   >
-                    City
+                    {item.dataPhoto.locationName}
                   </Text>
                 </TouchableOpacity>
               </View>
